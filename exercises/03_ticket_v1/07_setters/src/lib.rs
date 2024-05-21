@@ -10,26 +10,39 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn new(title: String, description: String, status: String) -> Ticket {
+        Self::check_title(&title);
+        Self::check_description(&description);
+        Self::check_status(&status);
+
+
+        Ticket {
+            title,
+            description,
+            status,
+        }
+    }
+
+    pub fn check_title(title: &String) {
         if title.is_empty() {
             panic!("Title cannot be empty");
         }
         if title.len() > 50 {
             panic!("Title cannot be longer than 50 characters");
         }
+    }
+
+    pub fn check_description(description: &String) {
         if description.is_empty() {
             panic!("Description cannot be empty");
         }
         if description.len() > 500 {
             panic!("Description cannot be longer than 500 characters");
         }
+    }
+
+    pub fn check_status(status: &String) {
         if status != "To-Do" && status != "In Progress" && status != "Done" {
             panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
-
-        Ticket {
-            title,
-            description,
-            status,
         }
     }
 
@@ -43,6 +56,24 @@ impl Ticket {
 
     pub fn status(&self) -> &String {
         &self.status
+    }
+
+    pub fn set_title(&mut self, title: String) -> &Self {
+        Self::check_title(&title);
+        self.title = title;
+        return self;
+    }
+
+    pub fn set_description(&mut self, description: String) -> &Self {
+        Self::check_description(&description);
+        self.description = description;
+        return self;
+    }
+
+    pub fn set_status(&mut self, status: String) -> &Self {
+        Self::check_status(&status);
+        self.status = status;
+        return self;
     }
 }
 
@@ -79,14 +110,14 @@ mod tests {
     #[should_panic(expected = "Title cannot be longer than 50 characters")]
     fn title_cannot_be_longer_than_fifty_chars() {
         Ticket::new(valid_title(), valid_description(), "To-Do".into())
-            .set_title(overly_long_title())
+            .set_title(overly_long_title());
     }
 
     #[test]
     #[should_panic(expected = "Description cannot be longer than 500 characters")]
     fn description_cannot_be_longer_than_500_chars() {
         Ticket::new(valid_title(), valid_description(), "To-Do".into())
-            .set_description(overly_long_description())
+            .set_description(overly_long_description());
     }
 
     #[test]

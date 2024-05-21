@@ -9,11 +9,14 @@ pub struct Ticket {
 #[cfg(test)]
 mod tests {
     use super::Ticket;
-    use std::mem::size_of;
+    use std::mem::{size_of, size_of_val};
 
     #[test]
     fn string_size() {
-        assert_eq!(size_of::<String>(), todo!());
+        let a: Vec<String> = vec![];
+        println!("{}", a.capacity());
+        println!("{}", size_of_val(&a));
+        assert_eq!(size_of::<String>(), 24);
     }
 
     #[test]
@@ -23,6 +26,6 @@ mod tests {
         // but, in general, the memory layout of structs is a more complex topic.
         // If you're curious, check out the "Data layout" section of the Rustonomicon
         // https://doc.rust-lang.org/nomicon/data.html for more information.
-        assert_eq!(size_of::<Ticket>(), todo!());
+        assert_eq!(size_of::<Ticket>(), 72);
     }
 }

@@ -24,10 +24,10 @@ impl Ticket {
             return Err("Title cannot be longer than 50 characters".to_string());
         }
         if description.is_empty() {
-            Err("Description cannot be empty".to_string());
+            return Err("Description cannot be empty".to_string());
         }
         if description.len() > 500 {
-            Err("Description cannot be longer than 500 characters".to_string());
+            return Err("Description cannot be longer than 500 characters".to_string());
         }
 
         Ok(Ticket {

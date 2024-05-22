@@ -13,6 +13,49 @@
 // You don't have to though: it's perfectly okay to write three separate
 // implementations manually. Venture further only if you're curious.
 
+// 详情请参考 https://rust-exercises.com/04_traits/09_assoc_vs_generic
+// 有一个泛型参数类型为 RHS, 默认为 Self 类型
+trait Power<RHS = Self> {
+    // 它有一个关联的类型，Output 即输出结果的类型
+    type Output;
+    fn power(self, rhs: RHS) -> Self::Output;
+}
+
+impl Power<u32> for u32 {
+    type Output = u32;
+    fn power(self, rhs: u32) -> Self::Output {
+        let mut res = 1;
+        for i in 0..rhs {
+            res *= self;
+        }
+        return res;
+    }
+}
+
+impl Power<&u32> for u32 {
+    type Output = u32;
+    fn power(self, rhs: &u32) -> Self::Output {
+        let mut res = 1;
+        for i in 0..*rhs {
+            res *= self;
+        }
+        return res;
+    }
+}
+
+impl Power<u16> for u32 {
+    type Output = u32;
+
+    fn power(self, rhs: u16) -> Self::Output {
+        let mut res = 1;
+        for i in 0..rhs {
+            res *= self;
+        }
+        return res;
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::Power;

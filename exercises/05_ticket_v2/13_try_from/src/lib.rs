@@ -1,11 +1,59 @@
 // TODO: Implement `TryFrom<String>` and `TryFrom<&str>` for `Status`.
 //  The parsing should be case-insensitive.
 
+use std::fmt::{Display, Formatter};
+use crate::Status::{Done, InProgress, ToDo};
+
+// extern crate enum_iterator;
+
 #[derive(Debug, PartialEq, Clone)]
 enum Status {
     ToDo,
     InProgress,
     Done,
+}
+
+impl Status {
+    fn values() -> Vec<Status> {
+        return vec![ToDo, InProgress, Done];
+    }
+}
+
+impl Display for Status {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let v = match self {
+            Status::ToDo => { "todo" }
+            Status::InProgress => { "inProgress" }
+            Status::Done => { "done" }
+        };
+        write!(f, "{}", v)
+    }
+}
+
+impl TryFrom<String> for Status {
+    type Error = ();
+
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        for s in Self::values() {
+            if s.to_string().eq_ignore_ascii_case(&value) {
+                return Ok(s);
+            }
+        }
+        panic!("not a status");
+    }
+}
+
+impl TryFrom<&str> for Status {
+    type Error = ();
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        for s in Self::values() {
+            if s.to_string().eq_ignore_ascii_case(value) {
+                return Ok(s);
+            }
+        }
+        panic!("not a status");
+    }
 }
 
 #[cfg(test)]

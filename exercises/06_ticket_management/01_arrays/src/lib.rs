@@ -1,9 +1,12 @@
 // TODO: Flesh out the `WeekTemperatures` struct and its method implementations to pass the tests.
 
+use std::cmp::PartialEq;
+
 pub struct WeekTemperatures {
-    // TODO
+    values: Vec<(Weekday, i32)>,
 }
 
+#[derive(Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub enum Weekday {
     Monday,
     Tuesday,
@@ -16,15 +19,28 @@ pub enum Weekday {
 
 impl WeekTemperatures {
     pub fn new() -> Self {
-        todo!()
+        WeekTemperatures {
+            values: vec![],
+        }
     }
 
     pub fn get_temperature(&self, day: Weekday) -> Option<i32> {
-        todo!()
+        for i in self.values.iter() {
+            if (i.0 == day) {
+                return Some(i.1);
+            }
+        }
+        None
     }
 
     pub fn set_temperature(&mut self, day: Weekday, temperature: i32) {
-        todo!()
+        for i in &mut self.values {
+            if (i.0 == day) {
+                i.1 = temperature;
+                return;
+            }
+        }
+        self.values.push((day, temperature));
     }
 }
 

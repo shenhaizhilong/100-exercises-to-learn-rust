@@ -14,8 +14,17 @@ pub fn fibonacci(n: u32) -> u32 {
     // TODO: implement the `fibonacci` function
     //
     // Hint: use a `Vec` to memoize the results you have already calculated
-    // so that you don't have to recalculate them several times.
-    todo!()
+    // so that you don't have to recalculate them several times
+    let mut a: u32 = 0;
+    let mut b: u32 = 1;
+    let mut t = a;
+    for i in 1..=n {
+        t = a + b;
+        a = b;
+        b = t;
+    }
+
+    return a;
 }
 
 #[cfg(test)]

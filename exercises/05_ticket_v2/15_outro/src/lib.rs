@@ -26,3 +26,17 @@ pub struct Ticket {
     pub description: TicketDescription,
     pub status: Status,
 }
+
+#[derive(thiserror::Error, Debug)]
+pub enum TicketNewError {
+    #[error("The title cannot be empty")]
+    TitleCannotBeEmpty,
+    #[error("The title cannot be longer than 50 characters")]
+    TitleTooLong,
+    #[error("Description cannot be empty")]
+    DescriptionCannotBeEmpty,
+    #[error("Description cannot be longer than 500 characters")]
+    DescriptionTooLong,
+    #[error("Status Invalid")]
+    StatusInvalid,
+}
